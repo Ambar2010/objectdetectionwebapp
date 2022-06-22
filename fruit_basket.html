@@ -30,6 +30,7 @@
         window.location = "index.html";
     }
     img = "";
+    objects = [];
     status = "";
 
 function preload() {
@@ -51,20 +52,25 @@ function gotResults(error, results) {
         console.error(error);
     }
     console.log(results);
+    objects = results;
 }
-
-
 
 function draw() {
     image(img, 0, 0, 640, 420);
-    fill("red");
-    text("Orange 88%", 175, 215);
-    noFill();
-    stroke("red");
-    rect(160, 200, 160, 100);
-    rect(130, 50, 180, 100);
-    text("banana 69% ", 145, 65);
-   
+    if(status != "" ) 
+    {
+    for(i = 0; i<objects.length;i++)
+    {
+        document.getElementById("status").innerHTML = "Status : Object Detected";
+        
+        fill("#FF0000");
+        percent = floor(objects[i].confidence * 100);
+        text(objects[i].label + " " + percent + "%", objects[i].x + 15, objects[i].y + 15);
+        noFill();
+        stroke("#FF0000");
+        rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+    }
+    }
 }
   </script>
 
